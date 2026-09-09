@@ -1,0 +1,22 @@
+---
+import type { Locale } from '../lib/i18n';
+import { alternateLocale, localizedPath } from '../lib/i18n';
+import { t } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const other = alternateLocale(locale);
+const tr = t(locale);
+const label = other === 'en' ? tr.nav.toEnglish : tr.nav.toJapanese;
+---
+<a
+  href={localizedPath(other)}
+  hreflang={other}
+  aria-label={tr.a11y.switchLanguage}
+  class="inline-flex items-center rounded-full border border-black/15 bg-bg/90 px-3.5 py-2 text-xs font-semibold tracking-wide backdrop-blur-sm transition hover:bg-white"
+>
+  {label}
+</a>

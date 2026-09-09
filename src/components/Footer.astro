@@ -1,0 +1,17 @@
+---
+import type { Locale } from '../lib/i18n';
+import { site } from '../data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const year = new Date().getFullYear();
+const name = site.copyrightName[locale];
+---
+<footer class="px-5 pb-11 pt-2 text-[11px] leading-relaxed text-muted">
+  © {year} {name}
+  <span aria-hidden="true"> · </span>
+  <a href={`mailto:${site.email}`} class="underline underline-offset-2">{site.email}</a>
+</footer>
