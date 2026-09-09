@@ -1,0 +1,29 @@
+---
+import type { Locale } from '../lib/i18n';
+import { enabledLinks } from '../data/links';
+import { t } from '../i18n';
+import LinkCard from './LinkCard.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const tr = t(locale);
+---
+<section class="reveal-3">
+  <h2 class="mb-3 font-display text-[11px] uppercase tracking-[0.24em] text-muted">{tr.sections.links}</h2>
+  <ul class="flex flex-col">
+    {enabledLinks.map((link, index) => <LinkCard link={link} locale={locale} index={index} />)}
+  </ul>
+</section>
+
+<script>
+  import { trackClick } from '../lib/analytics';
+
+  document.querySelectorAll<HTMLAnchorElement>('a[data-link-id]').forEach((a) => {
+    const handler = () => trackClick(a.dataset.linkId ?? '', a.dataset.linkLabel);
+    a.addEventListener('click', handler);
+    a.addEventListener('auxclick', handler);
+  });
+</script>

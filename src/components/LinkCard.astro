@@ -1,0 +1,32 @@
+---
+import type { Locale } from '../lib/i18n';
+import type { LinkItem } from '../data/schema';
+import { icon } from '../lib/icons';
+
+interface Props {
+  link: LinkItem;
+  locale: Locale;
+  index: number;
+}
+
+const { link, locale, index } = Astro.props;
+const isMail = link.url.startsWith('mailto:');
+const external = isMail ? {} : { target: '_blank', rel: 'noopener' };
+---
+<li>
+  <a
+    href={link.url}
+    data-link-id={link.id}
+    data-link-label={link.label[locale]}
+    {...external}
+    class="group flex items-center gap-4 border-b border-hairline py-4 text-[15px] transition-[background-color,padding] duration-150 first:border-t hover:bg-[#F2EEE4] hover:pl-3"
+    style={`animation-delay: ${(0.05 + index * 0.05).toFixed(2)}s`}
+  >
+    <span class="shrink-0" set:html={icon(link.icon)} />
+    <span class="flex-1">
+      {link.label[locale]}
+      {link.description && <span class="ml-2 text-xs text-muted">{link.description[locale]}</span>}
+    </span>
+    <span class="text-[#BEB7A8] transition group-hover:translate-x-0.5 group-hover:text-accent" set:html={icon('chevron')} />
+  </a>
+</li>
