@@ -1,0 +1,59 @@
+---
+import '@fontsource/zen-old-mincho/400.css';
+import '@fontsource/zen-old-mincho/500.css';
+import '@fontsource/zen-old-mincho/700.css';
+import '../styles/global.css';
+
+import type { Locale } from '../lib/i18n';
+import { localizedPath } from '../lib/i18n';
+import { t } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const tr = t(locale);
+
+const canonical = new URL(localizedPath(locale), Astro.site);
+const jaHref = new URL('/', Astro.site);
+const enHref = new URL('/en/', Astro.site);
+const ogImage = new URL('/og.png', Astro.site);
+
+const goatcounter = import.meta.env.PUBLIC_GOATCOUNTER_CODE as string | undefined;
+---
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tr.meta.title}</title>
+    <meta name="description" content={tr.meta.description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="ja" href={jaHref} />
+    <link rel="alternate" hreflang="en" href={enHref} />
+    <link rel="alternate" hreflang="x-default" href={jaHref} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={tr.meta.title} />
+    <meta property="og:description" content={tr.meta.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {goatcounter && (
+      <script
+        is:inline
+        defer
+        data-goatcounter={`https://${goatcounter}.goatcounter.com/count`}
+        src="https://gc.zgo.at/count.js"
+      ></script>
+    )}
+  </head>
+  <body class="bg-bg text-ink">
+    <main class="mx-auto min-h-screen max-w-[430px]">
+      <slot />
+    </main>
+  </body>
+</html>
