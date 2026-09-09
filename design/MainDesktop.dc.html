@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #ECE8E0; }
+    .page {
+      position: relative;
+      width: 1200px;
+      min-height: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 560px 1fr;
+      background: #FAF9F6;
+      color: #1C1A17;
+      font-family: system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .serif { font-family: "Zen Old Mincho", "Yu Mincho", YuMincho, Georgia, serif; }
+    a { color: #1C1A17; text-decoration: none; }
+    a:hover { color: #B45309; }
+    :focus-visible { outline: 2px solid #B45309; outline-offset: 3px; border-radius: 4px; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .reveal { animation: fadeUp .6s cubic-bezier(.2,.7,.2,1) both; }
+    .r1 { animation-delay: .07s; } .r2 { animation-delay: .14s; } .r3 { animation-delay: .21s; }
+
+    .hero { position: relative; overflow: hidden; }
+    .hero .slide { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #8A8271; font-size: 13px; letter-spacing: .2em; transition: opacity .95s ease; }
+    .hero .scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 300px; background: linear-gradient(to top, rgba(20,18,15,.5), rgba(20,18,15,0)); z-index: 2; }
+    .hero .id { position: absolute; left: 48px; right: 40px; bottom: 44px; z-index: 3; }
+    .hero .id h1 { margin: 0; font-size: 54px; font-weight: 500; line-height: 1.04; color: #FFFDF8; text-shadow: 0 2px 24px rgba(0,0,0,.42); }
+    .hero .id .sub { margin-top: 10px; font-size: 13px; letter-spacing: .06em; color: rgba(255,253,248,.92); }
+    .hero .dots { position: absolute; right: 32px; bottom: 46px; z-index: 4; display: flex; gap: 8px; }
+    .hero .dot { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 999px; cursor: pointer; background: rgba(255,253,248,.4); transition: background .2s ease, transform .2s ease; }
+    .hero .dot:hover { transform: scale(1.3); }
+
+    .lang {
+      position: absolute; top: 28px; right: 32px; z-index: 5;
+      font: 600 12px system-ui, sans-serif; letter-spacing: .06em;
+      color: #1C1A17; background: rgba(250,249,246,.94);
+      border: 1px solid rgba(28,26,23,.16); border-radius: 999px;
+      padding: 9px 15px; cursor: pointer;
+    }
+    .lang:hover { background: #fff; }
+
+    .content { padding: 72px 76px 64px; display: flex; flex-direction: column; gap: 34px; max-width: 600px; }
+    .bio { margin: 0; font-size: 15px; line-height: 1.85; color: #6B6558; }
+    .label { font-family: "Zen Old Mincho", "Yu Mincho", YuMincho, Georgia, serif; font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: #8A8271; margin-bottom: 15px; }
+
+    .news { display: flex; flex-direction: column; gap: 8px; }
+    .news a { display: flex; gap: 13px; font-size: 13px; line-height: 1.5; color: #6B6558; padding: 3px 0; }
+    .news .d { flex: none; color: #B45309; font-variant-numeric: tabular-nums; }
+
+    .links { display: flex; flex-direction: column; }
+    .row {
+      display: flex; align-items: center; gap: 16px;
+      padding: 19px 6px;
+      border-bottom: 1px solid #E6E1D8;
+      font-size: 16px; color: #1C1A17;
+      transition: background .16s ease, padding .16s ease;
+    }
+    .row:first-of-type { border-top: 1px solid #E6E1D8; }
+    .row .lbl { flex: 1; }
+    .row svg { flex: none; }
+    .row .chev { color: #BEB7A8; transition: color .16s ease, transform .16s ease; }
+    .row:hover { background: #F2EEE4; padding-left: 14px; padding-right: 2px; }
+    .row:hover .chev { color: #B45309; transform: translateX(3px); }
+
+    .foot { margin-top: 6px; font-size: 11px; color: #8A8271; line-height: 1.8; }
+    .foot a { color: #8A8271; text-decoration: underline; text-underline-offset: 2px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { animation: none !important; }
+      .hero .slide { transition: none; }
+    }
+  </style>
+</helmet>
+<div class="page">
+  <button type="button" class="lang" onClick="{{ toggle }}" aria-label="Switch language">{{ langBtnLabel }}</button>
+  <div class="hero">
+    <div class="slide" style="background: linear-gradient(158deg, #E4DED0 0%, #D6CDBB 55%, #C7BDA6 100%); opacity: {{ op0 }};">［ヒーロー写真 1 / 縦長］</div>
+    <div class="slide" style="background: linear-gradient(158deg, #E7DCCB 0%, #D9C9B2 55%, #CBB89C 100%); opacity: {{ op1 }};">［ヒーロー写真 2 / 縦長］</div>
+    <div class="slide" style="background: linear-gradient(158deg, #DDD9CC 0%, #CEC5B3 55%, #BEB39D 100%); opacity: {{ op2 }};">［ヒーロー写真 3 / 縦長］</div>
+    <div class="scrim"></div>
+    <div class="dots">
+      <button type="button" class="dot" style="background: {{ d0 }};" onClick="{{ go0 }}" aria-label="写真 1"></button>
+      <button type="button" class="dot" style="background: {{ d1 }};" onClick="{{ go1 }}" aria-label="写真 2"></button>
+      <button type="button" class="dot" style="background: {{ d2 }};" onClick="{{ go2 }}" aria-label="写真 3"></button>
+    </div>
+    <div class="id reveal">
+      <h1 class="serif">{{ name }}</h1>
+      <div class="sub">@kumakichi55 · {{ kind }}</div>
+    </div>
+  </div>
+  <div class="content">
+    <p class="bio reveal r1">{{ bio }}</p>
+    <section class="reveal r2">
+      <div class="label">{{ newsHead }}</div>
+      <div class="news">
+        <a href="#"><span class="d">2026.09.01</span><span>{{ news1 }}</span></a>
+        <a href="#"><span class="d">2026.08.12</span><span>{{ news2 }}</span></a>
+      </div>
+    </section>
+    <section class="reveal r3">
+      <div class="label">{{ linksHead }}</div>
+      <div class="links">
+        <a href="#" class="row" target="_blank" rel="noopener">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4.4"></circle><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"></circle></svg>
+          <span class="lbl">Instagram</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+        </a>
+        <a href="#" class="row" target="_blank" rel="noopener">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"></path></svg>
+          <span class="lbl">X</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+        </a>
+        <a href="#" class="row" target="_blank" rel="noopener">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M16 12v1.6a3 3 0 0 0 5.6 1.4A9 9 0 1 0 18 19.2"></path></svg>
+          <span class="lbl">Threads</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+        </a>
+        <a href="#" class="row" target="_blank" rel="noopener">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 16.5v-7l6 7v-7"></path></svg>
+          <span class="lbl">note</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+        </a>
+        <a href="#" class="row" target="_blank" rel="noopener">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M21 11.2c0 3.7-4 6.7-9 6.7-1 0-2-.12-2.9-.35L4 19l1.3-3.4C4.5 14.5 4 12.9 4 11.2 4 7.5 8 4.5 12.5 4.5S21 7.5 21 11.2Z"></path><path d="M12.5 8.7l1 2 2.1.3-1.6 1.5.4 2.1-1.9-1-1.9 1 .4-2.1-1.6-1.5 2.1-.3Z" stroke-width="1.1"></path></svg>
+          <span class="lbl">{{ stampLabel }}</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+        </a>
+        <a href="#" class="row" target="_blank" rel="noopener">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M21 11.2c0 3.7-4 6.7-9 6.7-1 0-2-.12-2.9-.35L4 19l1.3-3.4C4.5 14.5 4 12.9 4 11.2 4 7.5 8 4.5 12.5 4.5S21 7.5 21 11.2Z"></path><circle cx="10" cy="11" r=".9" fill="currentColor" stroke="none"></circle><circle cx="15" cy="11" r=".9" fill="currentColor" stroke="none"></circle><path d="M10 13.5c.7.7 3.3.7 4 0" stroke-width="1.1" stroke-linecap="round"></path></svg>
+          <span class="lbl">{{ emojiLabel }}</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+        </a>
+        <a href="#" class="row" target="_blank" rel="noopener">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M9 4 6 5.5 3 9l3 2v9h12v-9l3-2-3-3.5L15 4c-.6 1.8-5.4 1.8-6 0Z"></path></svg>
+          <span class="lbl">{{ suzuriLabel }}</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+        </a>
+        <a href="#" class="row">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"></rect><path d="M4 7.5l8 5.5 8-5.5"></path></svg>
+          <span class="lbl">{{ mailLabel }}</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+        </a>
+      </div>
+    </section>
+    <div class="foot">{{ footer }} · <a href="#">kuma-kichi [at] example.com</a></div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":1200,"height":960}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { lang: props && props.lang === "en" ? "en" : "ja", slide: 0 };
+    this._count = 3;
+    this._timer = null;
+  }
+  componentDidMount() {
+    var reduce = false;
+    try { reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+    if (reduce) return;
+    var self = this;
+    this._timer = setInterval(function () {
+      self.setState({ slide: (self.state.slide + 1) % self._count });
+    }, 5000);
+  }
+  componentWillUnmount() {
+    if (this._timer) { clearInterval(this._timer); this._timer = null; }
+  }
+  _goto(i) {
+    if (this._timer) { clearInterval(this._timer); this._timer = null; }
+    this.setState({ slide: i });
+  }
+  renderVals() {
+    var ja = this.state.lang === "ja";
+    var s = this.state.slide;
+    var self = this;
+    return {
+      langBtnLabel: ja ? "EN" : "日本語",
+      toggle: function () { self.setState({ lang: ja ? "en" : "ja" }); },
+      op0: s === 0 ? "1" : "0",
+      op1: s === 1 ? "1" : "0",
+      op2: s === 2 ? "1" : "0",
+      d0: s === 0 ? "#FFFDF8" : "rgba(255,253,248,.4)",
+      d1: s === 1 ? "#FFFDF8" : "rgba(255,253,248,.4)",
+      d2: s === 2 ? "#FFFDF8" : "rgba(255,253,248,.4)",
+      go0: function () { self._goto(0); },
+      go1: function () { self._goto(1); },
+      go2: function () { self._goto(2); },
+      name: ja ? "くまきち" : "Kumakichi",
+      kind: ja ? "柴犬 / Shiba Inu" : "Shiba Inu",
+      bio: ja ? "［プロフィール文をここに］" : "[Profile text goes here]",
+      newsHead: ja ? "新着" : "News",
+      news1: ja ? "［新着Infoの見出し］（サンプル）" : "[News headline] (sample)",
+      news2: ja ? "［新着Infoの見出し］（サンプル）" : "[News headline] (sample)",
+      linksHead: ja ? "リンク" : "Links",
+      stampLabel: ja ? "LINE スタンプ" : "LINE Stickers",
+      emojiLabel: ja ? "LINE 絵文字" : "LINE Emoji",
+      suzuriLabel: ja ? "SUZURI（グッズ）" : "SUZURI (Goods)",
+      mailLabel: ja ? "メールで問い合わせ" : "Email",
+      footer: ja ? "© 2026 くまきち" : "© 2026 Kumakichi"
+    };
+  }
+}
+</script>
+</body>
+</html>
