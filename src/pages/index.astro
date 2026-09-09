@@ -1,7 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
+import NewsList from '../components/NewsList.astro';
+import LinkList from '../components/LinkList.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+const locale = 'ja' as const;
 ---
-<Base locale="ja">
-  <Hero locale="ja" />
+<Base locale={locale}>
+  <Hero locale={locale} />
+  <div class="flex flex-col gap-8 px-[22px] pb-11 pt-7">
+    <p class="reveal-1 m-0 text-sm leading-relaxed text-muted">{site.profile[locale]}</p>
+    <NewsList locale={locale} />
+    <LinkList locale={locale} />
+  </div>
+  <Footer locale={locale} />
 </Base>
