@@ -21,8 +21,8 @@ export interface HeroImage {
 }
 
 export const heroImages: HeroImage[] = [
-  { src: hero1, alt: { ja: '椅子の下でくつろぎ、肉球を見せるクマキチ', en: 'Kumakichi relaxing under a chair with a paw on display' } },
   { src: hero2, alt: { ja: 'チェックのバンダナを着けたクマキチの顔', en: 'A close-up of Kumakichi wearing a checkered bandana' } },
+  { src: hero1, alt: { ja: '椅子の下でくつろぎ、肉球を見せるクマキチ', en: 'Kumakichi relaxing under a chair with a paw on display' } },
   { src: hero3, alt: { ja: '前足を広げて抱えられるクマキチ', en: 'Kumakichi being held with his front paws outstretched' } },
 ];
 
