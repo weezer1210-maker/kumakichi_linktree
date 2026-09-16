@@ -4,15 +4,15 @@ const localized = z.object({ ja: z.string().min(1), en: z.string().min(1) });
 
 export const iconNames = [
   'instagram', 'x', 'threads', 'note',
-  'line-stickers', 'line-emoji', 'suzuri', 'mail',
+  'line-stickers', 'line-emoji', 'line-themes', 'suzuri',
 ] as const;
 export type IconName = (typeof iconNames)[number];
 const iconName = z.enum(iconNames);
 
 const linkUrl = z
   .string()
-  .refine((u) => u.startsWith('https://') || u.startsWith('mailto:'), {
-    message: 'url must start with https:// or mailto:',
+  .refine((u) => u.startsWith('https://'), {
+    message: 'url must start with https://',
   });
 
 export const linkItemSchema = z.object({
@@ -54,8 +54,6 @@ export type NewsItem = z.infer<typeof newsItemSchema>;
 export const newsSchema = z.array(newsItemSchema);
 
 export const siteSchema = z.object({
-  handle: z.string().min(1),
-  email: z.string().email(),
   domain: z.string().min(1),
   copyrightName: localized,
   profile: localized,

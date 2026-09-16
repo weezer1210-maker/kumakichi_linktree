@@ -20,7 +20,7 @@ npm run preview  # dist/ を配信
 |---|---|
 | リンクの追加・並べ替え・一時非表示 | `src/data/links.ts`（`order` で並び、`enabled: false` で非表示） |
 | 新着Info | `src/data/news.ts`（`date` は `YYYY-MM-DD`。表示は新しい順に3件） |
-| プロフィール文・ハンドル・問い合わせ先・スライド速度 | `src/data/site.ts` |
+| プロフィール文・スライド速度 | `src/data/site.ts` |
 | UIの文言（「新着」「リンク」など） | `src/i18n/ja.ts` / `src/i18n/en.ts` |
 | アクセント色などのトークン | `src/styles/global.css` の `@theme` |
 

@@ -11,7 +11,7 @@ const locale = 'en' as const;
 <Base locale={locale}>
   <Hero locale={locale} />
   <div class="flex flex-col gap-8 px-[22px] pb-11 pt-7">
-    <p class="reveal-1 m-0 text-sm leading-relaxed text-muted">{site.profile[locale]}</p>
+    <p class="reveal-1 m-0 whitespace-pre-line text-sm leading-relaxed text-muted">{site.profile[locale]}</p>
     <NewsList locale={locale} />
     <LinkList locale={locale} />
   </div>

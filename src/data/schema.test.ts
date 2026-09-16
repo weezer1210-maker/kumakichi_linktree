@@ -14,10 +14,7 @@ describe('linkItemSchema', () => {
   it('accepts a well-formed https link', () => {
     expect(() => linkItemSchema.parse(goodLink)).not.toThrow();
   });
-  it('accepts a mailto url', () => {
-    expect(() => linkItemSchema.parse({ ...goodLink, id: 'mail', icon: 'mail', url: 'mailto:a@b.com' })).not.toThrow();
-  });
-  it('rejects a non-https, non-mailto url', () => {
+  it('rejects a non-https URL', () => {
     expect(() => linkItemSchema.parse({ ...goodLink, url: 'http://insecure.example' })).toThrow();
   });
   it('rejects an unknown icon', () => {
@@ -47,16 +44,14 @@ describe('newsItemSchema', () => {
 });
 
 describe('siteSchema', () => {
-  it('rejects an invalid email', () => {
+  it('accepts site metadata without an email address', () => {
     expect(() =>
       siteSchema.parse({
-        handle: 'kumakichi55',
-        email: 'not-an-email',
         domain: 'kumakichi55.com',
         copyrightName: { ja: 'くまきち', en: 'Kumakichi' },
         profile: { ja: 'あ', en: 'a' },
         slideshow: { intervalMs: 5000, fadeMs: 900 },
       }),
-    ).toThrow();
+    ).not.toThrow();
   });
 });

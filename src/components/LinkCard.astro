@@ -10,8 +10,7 @@ interface Props {
 }
 
 const { link, locale, index } = Astro.props;
-const isMail = link.url.startsWith('mailto:');
-const external = isMail ? {} : { target: '_blank', rel: 'noopener' };
+const external = { target: '_blank', rel: 'noopener' };
 ---
 <li>
   <a
