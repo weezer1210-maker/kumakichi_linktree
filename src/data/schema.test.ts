@@ -17,8 +17,12 @@ describe('linkItemSchema', () => {
   it('rejects a non-https URL', () => {
     expect(() => linkItemSchema.parse({ ...goodLink, url: 'http://insecure.example' })).toThrow();
   });
+  it('accepts supported social icons', () => {
+    expect(() => linkItemSchema.parse({ ...goodLink, icon: 'youtube' })).not.toThrow();
+    expect(() => linkItemSchema.parse({ ...goodLink, icon: 'tiktok' })).not.toThrow();
+  });
   it('rejects an unknown icon', () => {
-    expect(() => linkItemSchema.parse({ ...goodLink, icon: 'tiktok' })).toThrow();
+    expect(() => linkItemSchema.parse({ ...goodLink, icon: 'unknown' })).toThrow();
   });
   it('rejects a missing en label', () => {
     expect(() => linkItemSchema.parse({ ...goodLink, label: { ja: 'あ' } })).toThrow();

@@ -3,7 +3,7 @@ import { z } from 'zod';
 const localized = z.object({ ja: z.string().min(1), en: z.string().min(1) });
 
 export const iconNames = [
-  'instagram', 'x', 'threads', 'note',
+  'instagram', 'x', 'threads', 'youtube', 'tiktok', 'note',
   'line-stickers', 'line-emoji', 'line-themes', 'suzuri',
 ] as const;
 export type IconName = (typeof iconNames)[number];
